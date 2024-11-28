@@ -2,7 +2,7 @@
 
 My solutions for  challenges in Kotlin.
 
-# AdventOfCode2023
+# AdventOfCode2024
 Solutions for [AdventOfCode 2024](https://adventofcode.com/2024) in Kotlin
 
 # Creating all the files:

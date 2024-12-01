@@ -1,37 +1,21 @@
 package endredeak.aoc2024
 
+import endredeak.aoc2024.lib.utils.ints
 import kotlin.math.abs
 
 fun main() {
     solve("Historian Hysteria") {
         val input = lines
-            .map { l -> l.split("   ").let { it[0].toInt() to it[1].toInt()} }
-            .let {
-                val (left, right) = mutableListOf<Int>() to mutableListOf<Int>()
-
-                it.forEach { (l, r) ->
-                    left.add(l)
-                    right.add(r)
-                }
-
-                left to right
-            }
+            .map { l -> l.ints().let { it[0] to it[1] } }
+            .unzip()
+            .let { (l, r) -> l.sorted() to r.sorted() }
 
         part1(1873376) {
-            val (left, right) = input
-
-            left.sort()
-            right.sort()
-
-            left.indices.sumOf { i -> abs(left[i] - right[i]) }
+            input.let { (l, r) -> l.zip(r, Int::minus).sumOf(::abs) }
         }
 
         part2(18997088) {
-            val (left, right) = input
-
-            left.sumOf { l ->
-                right.count { l == it } * l
-            }
+            input.let { (left, right) -> left.sumOf { l -> right.count { l == it } * l } }
         }
     }
 }

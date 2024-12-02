@@ -5,7 +5,7 @@ import endredeak.aoc2024.lib.utils.ints
 import kotlin.math.absoluteValue
 
 fun main() {
-    solve("") {
+    solve("Red-Nosed Reports") {
         val input = lines
             .map { it.ints() }
 

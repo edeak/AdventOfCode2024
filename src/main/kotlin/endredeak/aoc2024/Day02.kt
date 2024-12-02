@@ -1,15 +1,28 @@
 package endredeak.aoc2024
 
+import endredeak.aoc2024.lib.utils.allSubListsWithAdjacentRemoved
+import endredeak.aoc2024.lib.utils.ints
+import kotlin.math.absoluteValue
+
 fun main() {
     solve("") {
         val input = lines
+            .map { it.ints() }
 
-        part1(-1) {
-            -1
-        }
+        fun List<Int>.isValid() =
+            this.windowed(2, 1)
+                .let {
+                    (it.all { (a, b) -> (a < b) } ||
+                            it.all { (a, b) -> (a > b) }) &&
+                            it.all { (a, b) -> (a - b).absoluteValue in (1..3) }
+                }
 
-        part2(-1) {
-            -1
+        part1(660) { input.count { it.isValid() } }
+
+        part2(689) {
+            input.count { report ->
+                report.allSubListsWithAdjacentRemoved().any { it.isValid() }
+            }
         }
     }
 }

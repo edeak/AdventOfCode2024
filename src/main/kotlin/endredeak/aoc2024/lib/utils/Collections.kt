@@ -42,6 +42,19 @@ fun <T> cartesianProduct(vararg lists: List<T>): List<List<T>> =
 fun Collection<Number>.product(): Long = this.fold(1L) { acc, i -> acc * i.toLong() }
 fun <T> Collection<T>.productOf(selector: (T) -> Long): Long = this.fold(1L) { acc, i -> acc * selector(i) }
 
-fun <A, B>List<A>.pMap(f: suspend (A) -> B): List<B> = runBlocking {
+fun <A, B> List<A>.pMap(f: suspend (A) -> B): List<B> = runBlocking {
     map { async(Dispatchers.Default) { f(it) } }.awaitAll()
 }
+
+fun <T> List<T>.allSubListsWithAdjacentRemoved(size: Int = 1): List<List<T>> =
+    this.indices
+        .reversed()
+        .windowed(size)
+        .map { ix ->
+            this.toMutableList()
+                .apply {
+                    ix.forEach { i ->
+                        this@apply.removeAt(i)
+                    }
+                }
+        }

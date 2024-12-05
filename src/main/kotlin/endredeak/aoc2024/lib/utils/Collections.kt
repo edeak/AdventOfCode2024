@@ -58,3 +58,8 @@ fun <T> List<T>.allSubListsWithAdjacentRemoved(size: Int = 1): List<List<T>> =
                     }
                 }
         }
+
+fun List<String>.toGrid(): Map<Coord, String> =
+    this.flatMapIndexed { y, line ->
+        line.mapIndexed { x, c -> Coord(x, y) to "$c" }
+    }.associate { it.first to it.second }

@@ -1,15 +1,46 @@
 package endredeak.aoc2024
 
-fun main() {
-    solve("") {
-        val input = lines
+import endredeak.aoc2024.lib.utils.Coord
+import endredeak.aoc2024.lib.utils.toGrid
 
-        part1(-1) {
-            -1
+fun main() {
+    solve("Ceres Search") {
+        val input = lines.toGrid()
+
+        part1(2603) {
+            input
+                .filterValues { it == "X" }
+                .keys
+                .flatMap { x ->
+                    x
+                        .allNeighbours()
+                        .map { d ->
+                            (1..3)
+                                .runningFold(x) { acc, _ -> acc + d } // great idea stolen from someone
+                                .mapNotNull { input[it] }
+                                .joinToString("")
+                        }
+                }
+                .count { it == "XMAS" }
         }
 
-        part2(-1) {
-            -1
+        part2(1965) {
+            input
+                .filterValues { it == "A" }
+                .keys
+                .count { a ->
+                    listOf(
+                        listOf(Coord(-1, -1), Coord(0, 0), Coord(1, 1)),
+                        listOf(Coord(-1, 1), Coord(0, 0), Coord(1, -1))
+                    )
+                        .all { diagonal ->
+                            diagonal
+                                .map { d -> a + d }
+                                .mapNotNull { input[it] }
+                                .joinToString("")
+                                .let { it == "MAS" || it == "SAM" }
+                        }
+                }
         }
     }
 }

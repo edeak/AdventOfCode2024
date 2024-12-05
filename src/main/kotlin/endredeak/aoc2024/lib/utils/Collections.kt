@@ -63,3 +63,10 @@ fun List<String>.toGrid(): Map<Coord, String> =
     this.flatMapIndexed { y, line ->
         line.mapIndexed { x, c -> Coord(x, y) to "$c" }
     }.associate { it.first to it.second }
+
+fun <T> List<T>.middle() =
+    if (this.size % 2 == 0)
+        error("the list has no middle item since it has even number of items (${this.size})")
+    else (
+        this[(this.size / 2)]
+    )

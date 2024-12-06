@@ -16,5 +16,7 @@ data class Coord(val x: Int, val y: Int) : Comparable<Coord> {
             Coord(1, 1)
         )
 
+    fun rotateRight() = Coord(-y, x)
+
     operator fun plus(other: Coord): Coord = Coord(this.x + other.x, this.y + other.y)
 }

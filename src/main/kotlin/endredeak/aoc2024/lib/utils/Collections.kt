@@ -6,6 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
+import kotlin.math.pow
 
 fun <T> Iterable<Iterable<T>>.print(separator: String = " ") =
     println(this.joinToString("\n") { it.joinToString(separator) })
@@ -70,3 +71,12 @@ fun <T> List<T>.middle() =
     else (
         this[(this.size / 2)]
     )
+
+fun Set<String>.combinations(length: Int): List<List<String>> {
+    return (0 until this.size.toDouble().pow(length).toInt())
+        .map { index ->
+            index.toString(this.size)
+                .padStart(length, '0')
+                .map { this.elementAt(it.toString().toInt()) }
+        }
+}

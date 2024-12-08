@@ -72,7 +72,7 @@ fun <T> List<T>.middle() =
         this[(this.size / 2)]
     )
 
-fun Set<String>.combinations(length: Int): List<List<String>> {
+fun <T> Collection<T>.combinations(length: Int): List<List<T>> {
     return (0 until this.size.toDouble().pow(length).toInt())
         .map { index ->
             index.toString(this.size)

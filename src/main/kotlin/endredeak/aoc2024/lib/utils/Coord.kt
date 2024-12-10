@@ -16,6 +16,12 @@ data class Coord(val x: Int, val y: Int) : Comparable<Coord> {
             Coord(1, 1)
         )
 
+    fun NEWS() = listOf(
+        Coord(1, 0),
+        Coord(0, 1),
+        Coord(-1,0),
+        Coord(0, -1))
+
     fun rotateRight() = Coord(-y, x)
 
     operator fun plus(other: Coord): Coord = Coord(this.x + other.x, this.y + other.y)

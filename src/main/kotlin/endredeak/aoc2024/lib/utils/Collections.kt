@@ -60,17 +60,10 @@ fun <T> List<T>.allSubListsWithAdjacentRemoved(size: Int = 1): List<List<T>> =
                 }
         }
 
-fun List<String>.toGrid(): Map<Coord, String> =
-    this.flatMapIndexed { y, line ->
-        line.mapIndexed { x, c -> Coord(x, y) to "$c" }
-    }.associate { it.first to it.second }
-
 fun <T> List<T>.middle() =
     if (this.size % 2 == 0)
         error("the list has no middle item since it has even number of items (${this.size})")
-    else (
-        this[(this.size / 2)]
-    )
+    else (this[(this.size / 2)])
 
 fun <T> Collection<T>.combinations(length: Int): List<List<T>> {
     return (0 until this.size.toDouble().pow(length).toInt())
@@ -80,3 +73,12 @@ fun <T> Collection<T>.combinations(length: Int): List<List<T>> {
                 .map { this.elementAt(it.toString().toInt()) }
         }
 }
+
+fun <T> List<String>.toGrid(mod: (Char) -> T?) =
+    this
+        .flatMapIndexed { y, l ->
+            l.mapIndexedNotNull { x, c ->
+                mod(c)?.let { Coord(y, x) to it}
+            }
+        }
+        .associate { it }

@@ -1,14 +1,13 @@
 package endredeak.aoc2024
 
 import endredeak.aoc2024.lib.utils.Coord
+import endredeak.aoc2024.lib.utils.toGrid
 
 fun main() {
     solve("Guard Gallivant") {
         data class Path(val points: Set<Coord>, val isLoop :Boolean)
 
-        val map = lines
-            .flatMapIndexed { y, l -> l.mapIndexed { x, c -> Coord(x,y) to c } }
-            .associate { it }
+        val map = lines.toGrid { it }
 
         val start = map.filter { it.value == '^' }.entries.first().key
 

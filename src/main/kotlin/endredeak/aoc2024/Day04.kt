@@ -5,7 +5,7 @@ import endredeak.aoc2024.lib.utils.toGrid
 
 fun main() {
     solve("Ceres Search") {
-        val input = lines.toGrid()
+        val input = lines.toGrid { "$it" }
 
         part1(2603) {
             input
@@ -13,10 +13,10 @@ fun main() {
                 .keys
                 .flatMap { x ->
                     x
-                        .allNeighbours()
+                        .dirs(true)
                         .map { d ->
                             (1..3)
-                                .runningFold(x) { acc, _ -> acc + d } // great idea stolen from someone
+                                .runningFold(x) { acc, _ -> acc + d }
                                 .mapNotNull { input[it] }
                                 .joinToString("")
                         }

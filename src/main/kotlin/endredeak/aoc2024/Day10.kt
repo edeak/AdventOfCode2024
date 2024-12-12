@@ -1,20 +1,11 @@
 package endredeak.aoc2024
 
 import endredeak.aoc2024.lib.utils.Coord
+import endredeak.aoc2024.lib.utils.toGrid
 
 fun main() {
     solve("Hoof It") {
-        val input = lines
-            .flatMapIndexed { y, l -> l.mapIndexed { x, c -> Coord(x,y) to c} }
-            .filter { it.second != '.' }
-            .map { it.first to it.second.digitToInt() }
-            .associate { it }
-
-        fun Coord.neighbours() =
-            input
-                .filterKeys { k -> k in this.NEWS().map { n -> n + this} }
-                .filterValues { it == input[this]!! + 1 }
-                .keys
+        val input = lines.toGrid { if (it == '.') null else it.digitToInt() }
 
         fun bfs(start: Coord): Pair<Int, Int> {
             val discovered = mutableSetOf(start)
@@ -24,12 +15,23 @@ fun main() {
             while (q.isNotEmpty()) {
                 val (curr, path) = q.removeFirst()
 
-                if (input[curr] == 9) { count++ }
+                if (input[curr] == 9) {
+                    count++
+                }
 
-                curr.neighbours()
+                with(curr) {
+                    input
+                        .filterKeys { k -> k in this.neighbours() }
+                        .filterValues { it == input[this]!! + 1 }
+                        .keys
+                }
                     .forEach {
-                        if (path.none { d -> d == it }) { q.add(it to path.plus(listOf(it))) }
-                        if (discovered.none { d -> d == it }) { discovered.add(it) }
+                        if (path.none { d -> d == it }) {
+                            q.add(it to path.plus(listOf(it)))
+                        }
+                        if (discovered.none { d -> d == it }) {
+                            discovered.add(it)
+                        }
                     }
             }
 

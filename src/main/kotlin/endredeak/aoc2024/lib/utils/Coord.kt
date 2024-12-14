@@ -26,4 +26,5 @@ data class Coord(val x: Int, val y: Int) : Comparable<Coord> {
     operator fun plus(other: Coord): Coord = Coord(this.x + other.x, this.y + other.y)
     operator fun minus(other: Coord): Coord = Coord(this.x - other.x, this.y - other.y)
     operator fun times(i: Int): Coord = Coord(x * i, y * i)
+    fun mod(other: Coord) = Coord(x.mod(other.x), y.mod(other.y))
 }

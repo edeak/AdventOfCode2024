@@ -3,7 +3,7 @@ package endredeak.aoc2024
 import endredeak.aoc2024.lib.utils.*
 
 fun main() {
-    solve("") {
+    solve("Warehouse Woes") {
         val input by lazy { text.split("\n\n") }
 
         fun Char.asMove() = when (this) {

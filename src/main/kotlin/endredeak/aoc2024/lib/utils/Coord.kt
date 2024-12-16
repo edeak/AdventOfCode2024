@@ -20,7 +20,8 @@ data class Coord(val x: Int, val y: Int) : Comparable<Coord> {
     fun neighbours(cross: Boolean = false) =
         dirs(cross).map { it + this }
 
-    fun rotateRight() = Coord(-y, x)
+    fun rotateRight() = Coord(y, -x)
+    fun rotateLeft() = Coord(-y, x)
 
     fun diff(other: Coord) = Coord(other.x - x, other.y - y)
     operator fun plus(other: Coord): Coord = Coord(this.x + other.x, this.y + other.y)

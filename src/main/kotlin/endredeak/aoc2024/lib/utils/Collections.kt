@@ -47,6 +47,10 @@ fun <A, B> List<A>.pMap(f: suspend (A) -> B): List<B> = runBlocking {
     map { async(Dispatchers.Default) { f(it) } }.awaitAll()
 }
 
+fun <A, B> List<A>.pMapIndexed(f: suspend (Int, A) -> B): List<B> = runBlocking {
+    mapIndexed { i, c -> async(Dispatchers.Default) { f(i, c) } }.awaitAll()
+}
+
 fun <T> List<T>.allSubListsWithAdjacentRemoved(size: Int = 1): List<List<T>> =
     this.indices
         .reversed()
